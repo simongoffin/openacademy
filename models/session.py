@@ -10,5 +10,7 @@ class Session(osv.Model):
         'seats' : fields.integer(string="Number of seats"),
         'instructor_id' : fields.many2one('res.partner', string="Instructor"),
         'course_id' : fields.many2one('openacademy.course',
-            ondelete='cascade', string="Course", required=True),
+            ondelete=’cascade’, string="Course", required=True),
+        'attendee_ids' : fields.one2many('openacademy.attendee', 'session_id',
+            string="Attendees"),
     }
