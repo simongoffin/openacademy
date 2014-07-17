@@ -7,6 +7,7 @@
         'security/ir.model.access.csv',
         'view/openacademy.xml',
         'view/openacademy_view.xml',
+        'view/partner_view.xml',
     ],
     'depends': ['base'],
 }
