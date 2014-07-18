@@ -32,6 +32,14 @@ class Session(osv.Model):
             }
         return res
         
+    def _check_instructor_is_not_attendee(self, cr, uid, ids):
+        for session in self.browse(cr, uid, ids):
+          if session.instructor_id:
+            for attendee in session.attendee_ids:
+              if session.instructor_id == attendee.partner_id:
+                return False
+        return True
+        
     _columns = {
         'name' : fields.char(string="Name", size=256, required=True),
         'start_date' : fields.date(string="Start date"),
@@ -44,3 +52,7 @@ class Session(osv.Model):
         #Fonctionnal
         'taken_seats_percent' : fields.function(_get_taken_seats,type='float', string='Taken Seats'),
     }
+    
+    _constraints = [(_check_instructor_is_not_attendee,
+    "The instructor cannot attend his own course!",
+     ['instructor_id', 'attendee_ids'])]
