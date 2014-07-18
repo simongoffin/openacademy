@@ -13,4 +13,6 @@ class Course(osv.Model):
             string='Session'),
     }
     
-    
+    _sql_constraints = [("name_different_from_description",
+        "CHECK (description != name)", "The title and the description must be different"),
+        ("name_unique", "unique(name)", "There is already a course with that title")]

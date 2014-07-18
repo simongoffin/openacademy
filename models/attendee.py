@@ -13,3 +13,6 @@ class Attendee(osv.Model):
         'session_id': fields.many2one('openacademy.session', string="Session",
             required=True, ondelete='cascade'),
     }
+    
+    _sql_constraints = [("pair_unique", "unique(partner_id, session_id)",
+        "The partner already follows this session")]
