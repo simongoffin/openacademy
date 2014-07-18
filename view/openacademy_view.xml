@@ -37,6 +37,19 @@
                 </tree>
             </field>
         </record>
+        <!-- Course search view -->
+        <record model="ir.ui.view" id="course_search">
+            <field name="name">course_search</field>
+            <field name="model">openacademy.course</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Courses">
+                    <filter name="my_courses" domain="[('responsible_id','=',uid)]"
+                        string="My Courses" icon="terp-partner"/>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
         
         <record model="ir.ui.view" id="session_form_view"> 
             <field name="name">session.form</field>
