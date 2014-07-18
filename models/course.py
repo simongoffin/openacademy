@@ -33,5 +33,4 @@ class Course(osv.Model):
     _defaults = {
         'active': True,
         'start_date': fields.date.today,
-        'state': 'Draft',
     }

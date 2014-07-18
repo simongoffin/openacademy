@@ -68,10 +68,12 @@
         
         <record model="ir.ui.view" id="session_tree_view"> 
             <field name="name">session.tree</field>
-            <field name="model">openacademy.session</field> <field name="arch" type="xml">
-                <tree string="Session Tree"> 
+            <field name="model">openacademy.session</field> 
+            <field name="arch" type="xml">
+                <tree string="Session Tree" colors="#0000ff:duration&lt;5;red:duration&gt;15"> 
                     <field name="name"/> 
                     <field name="course_id"/>
+                    <field name="duration" invisible="1"/>
                     <field name="taken_seats_percent" widget="progressbar"/>
                 </tree>
             </field>
