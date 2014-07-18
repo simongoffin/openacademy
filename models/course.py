@@ -4,6 +4,17 @@ from openerp.osv import osv, fields
 
 class Course(osv.Model):
     _name = "openacademy.course"
+    
+    def copy(self, cr, uid, id, defaults, context=None):
+        course = self.browse(cr, uid, id)
+        new_name = "Copy of " + course.name
+        other_name = self.search(cr, uid, [('name', '=like', course.name)],
+        count=True, context=context)
+        if other_name > 0:
+            new_name += " (" + str(other_name) + ")"
+        defaults['name'] = new_name
+        return super(Course, self).copy(cr, uid, id, defaults, context)
+
     _columns = {
         'name' : fields.char(string="Title", size=256, required=True),
         'description' : fields.text(string="Description"),
