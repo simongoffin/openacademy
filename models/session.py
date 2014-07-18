@@ -73,6 +73,12 @@ class Session(osv.Model):
     def _set_hours(self, cr, uid, ids, field, value, arg, context=None):
         if value:
             self.write(cr, uid, ids, {'duration' : (value / 24)}, context=context)
+            
+    def _get_attendee_count(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for session in self.browse(cr, uid, ids, context=context):
+            res[session.id] = len(session.attendee_ids)
+        return res
 
     
     _columns = {
@@ -88,6 +94,7 @@ class Session(osv.Model):
         #Fonctionnal
         'taken_seats_percent' : fields.function(_get_taken_seats,type='float', string='Taken Seats'),
         'hours' : fields.function(_determine_hours_from_duration, fnct_inv=_set_hours, type='float', string="Hours"),
+        'attendee_count': fields.function(_get_attendee_count,type='integer', string='Attendee Count', store=True),
     }
     
     _constraints = [(_check_instructor_is_not_attendee,

@@ -105,7 +105,7 @@
             </field>
         </record>
         
-            <!-- Session Gantt chart view -->
+        <!-- Session Gantt chart view -->
         <record model="ir.ui.view" id="session_gantt">
             <field name="name">session_gantt</field>
             <field name="model">openacademy.session</field>
@@ -116,6 +116,19 @@
                     <field name="name"/>
                     </level>
                 </gantt>
+            </field>
+        </record>
+        
+        <!-- Session graph view -->
+        <record model="ir.ui.view" id="session_graph">
+            <field name="name">session_graph</field>
+            <field name="model">openacademy.session</field>
+            <field name="type">graph</field>
+            <field name="arch" type="xml">
+                <graph string="Total sessions" type="bar">
+                    <field name="name" />
+                    <field name="attendee_count" operator="+"/>
+                </graph>
             </field>
         </record>
         

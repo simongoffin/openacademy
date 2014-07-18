@@ -14,6 +14,8 @@ class Course(osv.Model):
             new_name += " (" + str(other_name) + ")"
         defaults['name'] = new_name
         return super(Course, self).copy(cr, uid, id, defaults, context)
+        
+        
 
     _columns = {
         'name' : fields.char(string="Title", size=256, required=True),
