@@ -11,7 +11,7 @@ class Partner(osv.Model):
         'instructor' : fields.boolean("Instructor"),
         
         # Relational fields
-        'session_ids': fields.many2many("openacademy.session", string="Session"),
+        'session_ids': fields.many2many("openacademy.session", string="Session",domain=[('instructor','=',True)]),
     }
     _defaults = {
         'instructor' : False,
