@@ -17,13 +17,21 @@ class Course(osv.Model):
 
     _columns = {
         'name' : fields.char(string="Title", size=256, required=True),
+        'start_date' : fields.date(string="Start date"),
         'description' : fields.text(string="Description"),
         'responsible_id' : fields.many2one('res.users',
             ondelete='set null', string='Responsible', select=True),
         'session_ids' : fields.one2many('openacademy.session', 'course_id',
             string='Session'),
+        'active' : fields.boolean("Active"),
     }
     
     _sql_constraints = [("name_different_from_description",
         "CHECK (description != name)", "The title and the description must be different"),
         ("name_unique", "unique(name)", "There is already a course with that title")]
+        
+    _defaults = {
+        'active': True,
+        'start_date': fields.date.today,
+        'state': 'Draft',
+    }
