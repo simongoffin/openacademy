@@ -104,5 +104,20 @@
                 </calendar>
             </field>
         </record>
+        
+            <!-- Session Gantt chart view -->
+        <record model="ir.ui.view" id="session_gantt">
+            <field name="name">session_gantt</field>
+            <field name="model">openacademy.session</field>
+            <field name="type">gantt</field>
+            <field name="arch" type="xml">
+                <gantt string="Sessions" date_start="start_date" date_delay="hours" color="course_id">
+                    <level object="res.partner" link="instructor_id">
+                    <field name="name"/>
+                    </level>
+                </gantt>
+            </field>
+        </record>
+        
     </data>
 </openerp>

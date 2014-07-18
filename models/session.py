@@ -60,6 +60,20 @@ class Session(osv.Model):
             end_date = datetime.strptime(value[:10], "%Y-%m-%d")
             duration = end_date - start_date
             self.write(cr, uid, ids, {'duration' : (duration.days + 1)}, context=context)
+            
+    def _determine_hours_from_duration(self, cr, uid, ids, field, arg, context=None):
+        result = {}
+        for session in self.browse(cr, uid, ids, context=context):
+            if session.duration:
+                result[session.id] = session.duration * 24
+            else:
+                result[session.id] = 0
+        return result
+
+    def _set_hours(self, cr, uid, ids, field, value, arg, context=None):
+        if value:
+            self.write(cr, uid, ids, {'duration' : (value / 24)}, context=context)
+
     
     _columns = {
         'name' : fields.char(string="Name", size=256, required=True),
@@ -73,6 +87,7 @@ class Session(osv.Model):
         'attendee_ids' : fields.one2many('openacademy.attendee', 'session_id',string="Attendees"),
         #Fonctionnal
         'taken_seats_percent' : fields.function(_get_taken_seats,type='float', string='Taken Seats'),
+        'hours' : fields.function(_determine_hours_from_duration, fnct_inv=_set_hours, type='float', string="Hours"),
     }
     
     _constraints = [(_check_instructor_is_not_attendee,
