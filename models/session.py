@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp.osv import osv, fields
+from datetime import datetime, timedelta
 
 class Session(osv.Model):
 
@@ -40,11 +41,32 @@ class Session(osv.Model):
                 return False
         return True
         
+    def _determine_end_date(self, cr, uid, ids, field, arg, context=None):
+        result = {}
+        for session in self.browse(cr, uid, ids, context=context):
+            if session.start_date and session.duration:
+                start_date = datetime.strptime(session.start_date, "%Y-%m-%d")
+                duration = timedelta( days=(session.duration - 1) )
+                end_date = start_date + duration
+                result[session.id] = end_date.strftime("%Y-%m-%d")
+            else:
+                result[session.id] = session.start_date
+        return result
+        
+    def _write_end_date(self, cr, uid, ids, field, value, arg, context=None):
+        session = self.browse(cr, uid, ids, context=context)
+        if session.start_date and value:
+            start_date = datetime.strptime(session.start_date, "%Y-%m-%d")
+            end_date = datetime.strptime(value[:10], "%Y-%m-%d")
+            duration = end_date - start_date
+            self.write(cr, uid, ids, {'duration' : (duration.days + 1)}, context=context)
+    
     _columns = {
         'name' : fields.char(string="Name", size=256, required=True),
         'start_date' : fields.date(string="Start date"),
         'duration' : fields.float(string="Duration", digits=(6,2),help="Duration in days"),
         'seats' : fields.integer(string="Number of seats"),
+        'end_date': fields.function(_determine_end_date, string="End date",type='date', fnct_inv=_write_end_date),
         #Relational
         'instructor_id' : fields.many2one('res.partner', string="Instructor",domain=[('instructor','=',True)]),
         'course_id' : fields.many2one('openacademy.course',ondelete='cascade', string="Course", required=True),

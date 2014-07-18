@@ -66,6 +66,7 @@
             </field>
         </record>
         
+         <!-- Session tree view -->
         <record model="ir.ui.view" id="session_tree_view"> 
             <field name="name">session.tree</field>
             <field name="model">openacademy.session</field> 
@@ -76,6 +77,18 @@
                     <field name="duration" invisible="1"/>
                     <field name="taken_seats_percent" widget="progressbar"/>
                 </tree>
+            </field>
+        </record>
+        
+        <!-- Session calendar view -->
+        <record model="ir.ui.view" id="session_calendar">
+            <field name="name">session_calendar</field>
+            <field name="model">openacademy.session</field>
+            <field name="type">calendar</field>
+            <field name="arch" type="xml">
+                <calendar string="Sessions" date_start="start_date" date_stop="end_date" color="course_id">
+                    <field name="name"/>
+                </calendar>
             </field>
         </record>
     </data>
