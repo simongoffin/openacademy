@@ -17,6 +17,21 @@ class Session(osv.Model):
             result[session.id] = self._compute_taken_seats(session.attendee_ids,session.seats)
         return result
         
+    def onchange_taken_seats(self, cr, uid, ids, attendee_ids, seats, context=None): 
+        attendee_records = self.resolve_2many_commands(cr, uid, 'attendee_ids',attendee_ids, ['id'])
+        res = { 'value': { 'taken_seats': self._compute_taken_seats(attendee_records,seats), }, }
+        if seats < 0:
+            res['warning'] = {
+                'title': "Warning: bad value",
+                'message' : "You cannot have negative number of seats",
+            }
+        elif seats < len(attendee_records):
+            res['warning'] = {
+                'title': "Warning: problems",
+                'message' : "You need more seats for this session",
+            }
+        return res
+        
     _columns = {
         'name' : fields.char(string="Name", size=256, required=True),
         'start_date' : fields.date(string="Start date"),
