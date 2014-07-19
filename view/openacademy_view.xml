@@ -67,26 +67,40 @@
             <field name="name">session.form</field>
             <field name="model">openacademy.session</field> 
             <field name="arch" type="xml">
-                <form string="Session Form"> 
-                    <group colspan="2" col="2">
-                        <separator string="General" colspan="2"/> 
-                        <field name="course_id"/>
-                        <field name="name" />
-                        <field name="instructor_id" />
-                    </group>
-                    <group colspan="2" col="2">
-                        <separator string="Schedule" colspan="2"/> 
-                        <field name="start_date"/>
-                        <field name="duration"/>
-                        <field name="seats" on_change="onchange_taken_seats(attendee_ids,seats)"/>
-                        <field name="taken_seats_percent" widget="progressbar"/>
-                    </group>
-                    <separator string="Attendees" colspan="4"/>
-                    <field name="attendee_ids" nolabel="1" colspan="4" mode="tree" on_change="onchange_taken_seats(attendee_ids,seats)">
-                        <tree string="" editable="bottom"> 
-                            <field name="partner_id"/>
-                        </tree>
-                    </field>
+                <form string="Session Form">
+                    <header>
+                        <button name="action_draft" type="object" string="Reset to draft"
+                            states="Confirmed,Done" />
+                        <button name="action_confirmed" type="object" string="Confirm"
+                            states="Draft" class="oe_highlight" />
+                        <button name="action_done" type="object" string="Mark as done"
+                            states="Confirmed" class="oe_highlight" />
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <group colspan="2" col="2">
+                            <separator string="General" colspan="2"/> 
+                            <field name="course_id"/>
+                            <field name="name" />
+                            <field name="instructor_id" />
+                        </group>
+                        <group colspan="2" col="2">
+                            <separator string="Schedule" colspan="2"/> 
+                            <field name="start_date"/>
+                            <field name="duration"/>
+                            <field name="seats" on_change="onchange_taken_seats(attendee_ids,seats)"/>
+                            <field name="taken_seats_percent" widget="progressbar"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Attendees">
+                                <field name="attendee_ids" nolabel="1" colspan="4" mode="tree" on_change="onchange_taken_seats(attendee_ids,number_seats)">
+                                <tree string="" editable="bottom">
+                                    <field name="partner_id"/>
+                                </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
                 </form>
             </field>
         </record>

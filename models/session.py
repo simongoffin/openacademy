@@ -79,6 +79,18 @@ class Session(osv.Model):
         for session in self.browse(cr, uid, ids, context=context):
             res[session.id] = len(session.attendee_ids)
         return res
+        
+    def action_draft(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, { 'state' : 'Draft' }, context=context)
+        return True
+
+    def action_confirmed(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, { 'state' : 'Confirmed' }, context=context)
+        return True
+
+    def action_done(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, { 'state' : 'Done' }, context=context)
+        return True
 
     
     _columns = {
@@ -87,6 +99,8 @@ class Session(osv.Model):
         'duration' : fields.float(string="Duration", digits=(6,2),help="Duration in days"),
         'seats' : fields.integer(string="Number of seats"),
         'color' : fields.integer('Color'),
+        'state': fields.selection([('Draft', 'Draft'), ('Confirmed', 'Confirmed'),
+            ('Done', 'Done')], string="State"),
         #Relational
         'instructor_id' : fields.many2one('res.partner', string="Instructor",domain=[('instructor','=',True)]),
         'course_id' : fields.many2one('openacademy.course',ondelete='cascade', string="Course", required=True),
@@ -100,4 +114,9 @@ class Session(osv.Model):
     
     _constraints = [(_check_instructor_is_not_attendee,
     "The instructor cannot attend his own course!",
-     ['instructor_id', 'attendee_ids'])]
+    ['instructor_id', 'attendee_ids'])]
+     
+    _defaults = {
+        'start_date': fields.date.today,
+        'state': 'Draft',
+    }
