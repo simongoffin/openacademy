@@ -86,6 +86,7 @@ class Session(osv.Model):
         'start_date' : fields.date(string="Start date"),
         'duration' : fields.float(string="Duration", digits=(6,2),help="Duration in days"),
         'seats' : fields.integer(string="Number of seats"),
+        'color' : fields.integer('Color'),
         #Relational
         'instructor_id' : fields.many2one('res.partner', string="Instructor",domain=[('instructor','=',True)]),
         'course_id' : fields.many2one('openacademy.course',ondelete='cascade', string="Course", required=True),
