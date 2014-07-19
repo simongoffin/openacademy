@@ -99,7 +99,10 @@
             <field name="model">openacademy.session</field>
             <field name="type">calendar</field>
             <field name="arch" type="xml">
-                <calendar string="Sessions" date_start="start_date" date_stop="end_date" color="course_id">
+                <calendar string="Sessions"
+                          date_start="start_date" 
+                          date_stop="end_date" 
+                          color="course_id">
                     <field name="name"/>
                 </calendar>
             </field>

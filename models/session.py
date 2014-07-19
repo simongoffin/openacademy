@@ -86,7 +86,6 @@ class Session(osv.Model):
         'start_date' : fields.date(string="Start date"),
         'duration' : fields.float(string="Duration", digits=(6,2),help="Duration in days"),
         'seats' : fields.integer(string="Number of seats"),
-        'end_date': fields.function(_determine_end_date, string="End date",type='date', fnct_inv=_write_end_date),
         #Relational
         'instructor_id' : fields.many2one('res.partner', string="Instructor",domain=[('instructor','=',True)]),
         'course_id' : fields.many2one('openacademy.course',ondelete='cascade', string="Course", required=True),
@@ -94,6 +93,7 @@ class Session(osv.Model):
         #Fonctionnal
         'taken_seats_percent' : fields.function(_get_taken_seats,type='float', string='Taken Seats'),
         'hours' : fields.function(_determine_hours_from_duration, fnct_inv=_set_hours, type='float', string="Hours"),
+        'end_date': fields.function(_determine_end_date, string="End date",type='date', fnct_inv=_write_end_date),
         'attendee_count': fields.function(_get_attendee_count,type='integer', string='Attendee Count', store=True),
     }
     
