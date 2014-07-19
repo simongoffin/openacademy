@@ -5,7 +5,7 @@
             <field name="name">Courses</field>
             <field name="res_model">openacademy.course</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field> 
+            <field name="view_mode">tree,form,graph</field> 
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Create the first course</p> </field>
         </record>
@@ -18,7 +18,7 @@
         <record model="ir.actions.act_window" id="session_list_action"> <field name="name">Sessions</field>
             <field name="res_model">openacademy.session</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar,gantt</field> 
+            <field name="view_mode">tree,form,calendar,gantt,graph</field> 
         </record>
         
         <menuitem id="session_menu" name="Sessions" parent="openacademy_menu"

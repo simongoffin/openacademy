@@ -51,6 +51,18 @@
             </field>
         </record>
         
+        <!-- Course graph view -->
+        <record model="ir.ui.view" id="openacademy_course_graph_view">
+            <field name="name">openacademy.course.graph</field>
+            <field name="model">openacademy.course</field>
+            <field name="arch" type="xml">
+                <graph string="Participations by Courses" type="bar">
+                    <field name="name"/>
+                    <field name="attendee_count_course" operator="+"/>
+                </graph>
+            </field>
+        </record>
+        
         <record model="ir.ui.view" id="session_form_view"> 
             <field name="name">session.form</field>
             <field name="model">openacademy.session</field> 

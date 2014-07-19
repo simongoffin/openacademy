@@ -3,7 +3,7 @@ from openerp.osv import osv, fields
 
 class Attendee(osv.Model):
     _name = "openacademy.attendee"
-    
+   
     _rec_name = 'partner_id'
     
     _columns = {
