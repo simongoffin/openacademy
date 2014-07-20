@@ -9,6 +9,31 @@
             <field name="target">new</field>
         </record>
         
+        <!-- Attendee wizard form view -->
+        <record model="ir.ui.view" id="attendee_wizard_form">
+          <field name="name">attendee_wizard_form</field>
+          <field name="model">openacademy.create.attendee.wizard</field>
+          <field name="type">form</field>
+          <field name="arch" type="xml">
+            <form string="Add attendees">
+              <sheet>
+                <group colspan="2">
+                  <field name="session_id" colspan="2"/>
+                </group>
+                <field name="attendee_ids" nolabel="1" colspan="4">
+                  <tree string="Attendees" editable="bottom">
+                    <field name="partner_id"/>
+                  </tree>
+                </field>
+              </sheet>
+              <footer>
+                <button string="Do it!" type="object" icon="gtk-ok" name="action_add_attendee" confirm="Are you sure you want to add those attendees?"/>
+                <button string="Cancel" icon="gtk-cancel" special="cancel"/>
+              </footer>
+            </form>
+          </field>
+        </record>
+        
     <menuitem name="Add attendee" parent="openacademy_menu" 
         id="create_attendee_wizard_menu" action="create_attendee_wizard_action"/>
     
