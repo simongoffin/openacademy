@@ -9,6 +9,7 @@
         'view/openacademy.xml',
         'view/openacademy_view.xml',
         'view/partner_view.xml',
+        'wizard/create_attendee_view.xml',
     ],
     'depends': ['base'],
 }
