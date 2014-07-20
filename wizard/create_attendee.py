@@ -11,10 +11,21 @@ class CreateAttendeeWizard(osv.TransientModel):
         session_model.write(cr, uid, session_ids,
             {'attendee_ids': [(0, 0, data) for data in att_data]}, context)
         return {}
+        
+    def _get_active_sessions(self, cr, uid, context):
+        if context.get('active_model') == 'openacademy.session':
+            return context.get('active_ids', False)
+        return False
+
+
 
     _columns = {
         'session_id': fields.many2one('openacademy.session', 'Session',required=True),
         'attendee_ids': fields.one2many('openacademy.attendee.wizard','wizard_id', 'Attendees'),
+    }
+    
+    _defaults = {
+        'session_id': _get_active_sessions,
     }
 
 class AttendeeWizard(osv.TransientModel):
