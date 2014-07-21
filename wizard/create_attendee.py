@@ -20,7 +20,7 @@ class CreateAttendeeWizard(osv.TransientModel):
 
 
     _columns = {
-        'session_id': fields.many2one('openacademy.session', 'Session',required=True),
+        'session_id': fields.many2many('openacademy.session', 'Session',required=True),
         'attendee_ids': fields.one2many('openacademy.attendee.wizard','wizard_id', 'Attendees'),
     }
     
